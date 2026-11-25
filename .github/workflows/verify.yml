@@ -1,0 +1,14 @@
+name: Verify
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  verify:
+    # 中身は sandbox-platform が持つ。ここではタグで版を選ぶだけにする
+    uses: nagiyu/sandbox-platform/.github/workflows/service-verify.yml@v1
+    permissions:
+      contents: read
+      packages: read

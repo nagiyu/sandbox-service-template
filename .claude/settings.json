@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "nagiyu-sandbox": {
+      "source": {
+        "source": "github",
+        "repo": "nagiyu/sandbox-platform"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "platform-rules@nagiyu-sandbox": true
+  }
+}

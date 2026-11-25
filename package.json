@@ -1,0 +1,16 @@
+{
+  "name": "sandbox-service",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "npm run build && node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@nagiyu/sandbox-common": "^0.1.0"
+  },
+  "devDependencies": {
+    "@nagiyu/sandbox-tsconfig": "^0.1.0",
+    "typescript": "^5.6.3"
+  }
+}
