@@ -12,8 +12,7 @@
 
 | ファイル | 受け取っているもの |
 |---|---|
-| `.github/workflows/verify.yml` | reusable workflow `service-verify.yml@v1` |
+| `.github/workflows/verify.yml` | reusable workflow `service-verify.yml@v1.0.0` (固定の版) |
 | `tsconfig.json` | `@nagiyu/sandbox-tsconfig` の `base.json` |
 | `package.json` | `@nagiyu/sandbox-common` |
-| `renovate.json` | Renovate preset `renovate/default` |
 | `.claude/settings.json` | Claude plugin `platform-rules` |

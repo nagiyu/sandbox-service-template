@@ -7,8 +7,8 @@ on:
 
 jobs:
   verify:
-    # 中身は sandbox-platform が持つ。ここではタグで版を選ぶだけにする
-    uses: nagiyu/sandbox-platform/.github/workflows/service-verify.yml@v1
+    # 中身は sandbox-platform が持つ。ここでは版を固定するだけにし、新しい版を使うときにこの行を上げる
+    uses: nagiyu/sandbox-platform/.github/workflows/service-verify.yml@v1.0.0
     permissions:
       contents: read
       packages: read
