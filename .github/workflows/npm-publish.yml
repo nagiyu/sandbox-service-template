@@ -1,0 +1,48 @@
+name: npm publish (reusable)
+
+# 別のリポジトリから workflow_call で呼ばれ、呼んだ側のリポジトリのパッケージを npmjs.com に出す。
+# trusted publishing (OIDC) は、呼んだ側の workflow のファイル名で照合されるので、登録はそちらで行う
+on:
+  workflow_call:
+    inputs:
+      package-dirs:
+        description: publish するパッケージのディレクトリ (glob 可、空白区切り)
+        type: string
+        default: '.'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+
+      # trusted publishing は npm CLI 11.5.1 以上が要る
+      - name: Ensure npm for trusted publishing
+        run: |
+          npm install -g npm@11
+          npm --version
+
+      - run: npm ci
+
+      # 版を上げたパッケージだけを出す。同じ版の再 publish はレジストリが拒むので、先に有無を確かめる
+      - name: Publish changed versions
+        env:
+          PACKAGE_DIRS: ${{ inputs.package-dirs }}
+        run: |
+          for dir in $PACKAGE_DIRS; do
+            name=$(node -p "require('./${dir%/}/package.json').name")
+            version=$(node -p "require('./${dir%/}/package.json').version")
+            if npm view "${name}@${version}" version >/dev/null 2>&1; then
+              echo "skip: ${name}@${version} は publish 済み"
+            else
+              echo "publish: ${name}@${version}"
+              (cd "$dir" && npm publish --access public)
+            fi
+          done
